@@ -39,6 +39,9 @@ const params = {
 
 vm.createOrUpdate(resourceGroupName, vmName, params)
   .then((res) => {
+    return vm.list(resourceGroupName);
+  })
+  .then((res) => {
     console.log(res);
   })
   .catch((err) => {
