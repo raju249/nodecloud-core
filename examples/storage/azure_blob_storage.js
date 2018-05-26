@@ -22,6 +22,10 @@ blob
   })
   .then(res => {
     console.log(res);
+    return blob.deleteBlob(containerName, "test-blob", {});
+  })
+  .then(res => {
+    console.log(res);
     return blob.delete(containerName, params);
   })
   .then(res => {
