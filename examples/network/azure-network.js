@@ -6,12 +6,16 @@ const network = azure.network();
 
 const resourceGroupName = "nodecloud";
 const networkName = "nodecloud-test";
-
+const subnetName = "nodecloud-subnet";
 const params = {
   location: "centralus",
   addressSpace: {
     addressPrefixes: ["10.0.0.0/16"]
   }
+};
+
+const subnetParams = {
+  addressPrefix: "10.0.0.0/24"
 };
 
 network
@@ -23,6 +27,19 @@ network
   .then(res => {
     console.log(res);
     return network.get(resourceGroupName, networkName, params);
+  })
+  .then(res => {
+    console.log(res);
+    return network.createSubnet(
+      resourceGroupName,
+      networkName,
+      subnetName,
+      subnetParams
+    );
+  })
+  .then(res => {
+    console.log(res);
+    return network.deleteSubnet(resourceGroupName, networkName, subnetName, {});
   })
   .then(res => {
     console.log(res);
