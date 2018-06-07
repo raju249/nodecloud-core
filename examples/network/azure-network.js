@@ -7,6 +7,7 @@ const network = azure.network();
 const resourceGroupName = "nodecloud";
 const networkName = "nodecloud-test";
 const subnetName = "nodecloud-subnet";
+const securityGroupName = "nodecloud-sec-group";
 const params = {
   location: "centralus",
   addressSpace: {
@@ -44,6 +45,16 @@ network
   .then(res => {
     console.log(res);
     return network.delete(resourceGroupName, networkName, params);
+  })
+  .then(res => {
+    console.log(res);
+    return network.createSecurityGroup(resourceGroupName, securityGroupName, {
+      location: "centralus"
+    });
+  })
+  .then(res => {
+    console.log(res);
+    return network.deleteSecurityGroup(resourceGroupName, securityGroupName);
   })
   .then(res => {
     console.log(res);
