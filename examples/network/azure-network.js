@@ -8,11 +8,16 @@ const resourceGroupName = "nodecloud";
 const networkName = "nodecloud-test";
 const subnetName = "nodecloud-subnet";
 const securityGroupName = "nodecloud-sec-group";
+const loadBalancerName = "nodecloud-test-loadBalancer";
 const params = {
   location: "centralus",
   addressSpace: {
     addressPrefixes: ["10.0.0.0/16"]
   }
+};
+
+const commonParams = {
+  location: "centralus"
 };
 
 const subnetParams = {
@@ -48,13 +53,27 @@ network
   })
   .then(res => {
     console.log(res);
-    return network.createSecurityGroup(resourceGroupName, securityGroupName, {
-      location: "centralus"
-    });
+    return network.createSecurityGroup(
+      resourceGroupName,
+      securityGroupName,
+      commonParams
+    );
   })
   .then(res => {
     console.log(res);
     return network.deleteSecurityGroup(resourceGroupName, securityGroupName);
+  })
+  .then(res => {
+    console.log(res);
+    return network.createLoadBalancer(
+      resourceGroupName,
+      loadBalancerName,
+      commonParams
+    );
+  })
+  .then(res => {
+    console.log(res);
+    return network.deleteLoadBalancer(resourceGroupName, loadBalancerName, {});
   })
   .then(res => {
     console.log(res);
