@@ -16,6 +16,19 @@ const params = {
   }
 };
 
+const securityRuleName = "nodecloud-sec-rule-name";
+const securityRulesParams = {
+  location: "centralus",
+  protocol: "Tcp",
+  direction: "Inbound",
+  priority: 100,
+  access: "Allow",
+  sourcePortRange: "*",
+  destinationPortRange: "*",
+  sourceAddressPrefix: "*",
+  destinationAddressPrefix: "*"
+};
+
 const commonParams = {
   location: "centralus"
 };
@@ -57,6 +70,24 @@ network
       resourceGroupName,
       securityGroupName,
       commonParams
+    );
+  })
+  .then(res => {
+    console.log(res);
+    return network.createSecurityRule(
+      resourceGroupName,
+      securityGroupName,
+      securityRuleName,
+      securityRulesParams
+    );
+  })
+  .then(res => {
+    console.log(res);
+    return network.deleteSecurityRule(
+      resourceGroupName,
+      securityGroupName,
+      securityRuleName,
+      {}
     );
   })
   .then(res => {
